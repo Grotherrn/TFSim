@@ -51,6 +51,22 @@ void res_station_rob::exec()
                 else
                     cout << "Divisao por 0, instrucao ignorada!" << endl;
             }
+            else if(op.substr(0,4) == "AND")
+            {
+                res = (int)vj & (int)vk;
+            }
+           else if(op.substr(0,4) == "OR")
+            {
+                res = (int)vj | (int)vk;
+            }
+            else if(op.substr(0,4) == "XOR")
+            {
+                res = (int)vj ^ (int)vk;
+            }
+            else if(op.substr(0,4) == "NOR")
+            {
+                res = ~((int)vj | (int)vk);
+            }
             else if(isMemory)
             {
                 a += vk;

@@ -49,7 +49,8 @@ int sc_main(int argc, char *argv[])
     grid memory(fm,rectangle(),10,50);
     // Tempo de latencia de uma instrucao
     // Novas instrucoes devem ser inseridas manualmente aqui
-    map<string,int> instruct_time{{"DADD",4},{"DADDI",4},{"DSUB",6},{"DSUBI",6},{"DMUL",10},{"DDIV",16},{"MEM",2}};
+    map<string,int> instruct_time{{"DADD",4},{"DADDI",4}, {"AND",4},{"XOR",4},
+                {"NOR",4},{"OR",4},{"DSUB",6},{"DSUBI",6},{"DMUL",10},{"DDIV",16},{"MEM",2}};
     top top1("top");
     botao.caption("START");
     clock_control.caption("NEXT CYCLE");
@@ -104,7 +105,11 @@ int sc_main(int argc, char *argv[])
         inputbox::text dmul_t("DMUL",std::to_string(instruct_time["DMUL"]));
         inputbox::text ddiv_t("DDIV",std::to_string(instruct_time["DDIV"]));
         inputbox::text mem_t("Load/Store",std::to_string(instruct_time["MEM"]));
-        if(ibox.show_modal(dadd_t,daddi_t,dsub_t,dsubi_t,dmul_t,ddiv_t,mem_t))
+        inputbox::text and_t("AND",std::to_string(instruct_time["AND"]));
+        inputbox::text or_t("OR",std::to_string(instruct_time["OR"]));
+        inputbox::text nor_t("NOR",std::to_string(instruct_time["NOR"]));
+        inputbox::text xor_t("XOR",std::to_string(instruct_time["XOR"]));
+        if(ibox.show_modal(dadd_t,daddi_t,dsub_t,dsubi_t,dmul_t,ddiv_t,mem_t,or_t,and_t,nor_t,xor_t))
         {
             instruct_time["DADD"] = std::stoi(dadd_t.value());
             instruct_time["DADDI"] = std::stoi(daddi_t.value());
@@ -113,6 +118,10 @@ int sc_main(int argc, char *argv[])
             instruct_time["DMUL"] = std::stoi(dmul_t.value());
             instruct_time["DDIV"] = std::stoi(ddiv_t.value());
             instruct_time["MEM"] = std::stoi(mem_t.value());
+            instruct_time["AND"] = std::stoi(and_t.value());
+            instruct_time["OR"] = std::stoi(or_t.value());
+            instruct_time["XOR"] = std::stoi(xor_t.value());
+            instruct_time["NOR"] = std::stoi(nor_t.value());
         }
     });
     sub->append("Fila de instruções", [&](menu::item_proxy &ip)
